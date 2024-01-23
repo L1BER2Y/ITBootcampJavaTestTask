@@ -5,6 +5,8 @@ import by.shershen.database.repository.UserRepository;
 import by.shershen.service.api.IUserService;
 import by.shershen.service.dto.PageDTO;
 import by.shershen.service.dto.UserDTO;
+import by.shershen.service.exceptions.InternalServerErrorException;
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -22,8 +24,14 @@ public class UserService implements IUserService {
 
     @Override
     public Page<UserDTO> findAll(PageDTO pageDTO) {
-        Page<User> users = this.userRepository.findAll(PageRequest.of(pageDTO.getPage(), pageDTO.getSize(), Sort.by(Sort.Order.asc("email"))));
+        try {
+        Page<User> users =
+                this.userRepository.
+                        findAll(PageRequest.of(pageDTO.getPage(), pageDTO.getSize(), Sort.by("email")));
         return users.map(UserService::apply);
+        } catch (DataAccessException e) {
+            throw new InternalServerErrorException(e.getMessage());
+        }
     }
 
     @Override
@@ -35,7 +43,11 @@ public class UserService implements IUserService {
         entity.setPatronymic(userDTO.getPatronymic());
         entity.setEmail(userDTO.getEmail());
         entity.setRole(userDTO.getRole());
+        try {
         this.userRepository.saveAndFlush(entity);
+        } catch (DataAccessException e) {
+            throw new InternalServerErrorException(e.getMessage());
+        }
     }
 
     private static UserDTO apply(User user) {

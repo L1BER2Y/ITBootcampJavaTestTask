@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/users")
 public class UserController {
     private final IUserService userService;
 
@@ -17,7 +17,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping(value = "/add")
+    @PostMapping
     @ResponseBody
     public ResponseEntity<String> add(@RequestBody UserDTO userDTO
     ) {
@@ -25,7 +25,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping(value ="/find")
+    @GetMapping
     @ResponseBody
     public Page<UserDTO> findAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
                                  @RequestParam(value = "size", defaultValue = "10") Integer size

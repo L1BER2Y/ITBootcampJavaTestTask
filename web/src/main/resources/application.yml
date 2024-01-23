@@ -3,6 +3,3 @@ spring:
     url: jdbc:mysql://localhost:3306/users?serverTimezone=Europe/Minsk&useSSL=false
     username: root
     password: 4712VS5988_gh
-
-server:
-  port: 8082
