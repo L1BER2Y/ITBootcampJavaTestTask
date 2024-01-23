@@ -1,4 +1,4 @@
-package by.shershen.service;
+package by.shershen.service.services;
 
 import by.shershen.database.entity.User;
 import by.shershen.database.repository.UserRepository;
