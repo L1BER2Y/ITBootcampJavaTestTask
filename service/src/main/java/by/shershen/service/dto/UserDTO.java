@@ -3,7 +3,6 @@ package by.shershen.service.dto;
 import by.shershen.database.entity.Role;
 import lombok.*;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

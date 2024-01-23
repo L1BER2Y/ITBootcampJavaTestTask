@@ -3,3 +3,7 @@ spring:
     url: jdbc:mysql://localhost:3306/users?serverTimezone=Europe/Minsk&useSSL=false
     username: root
     password: 4712VS5988_gh
+
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+    enabled: true
