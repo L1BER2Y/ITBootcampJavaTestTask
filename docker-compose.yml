@@ -1,0 +1,36 @@
+version: '3.11'
+services:
+  db:
+    build: mysql
+    image: users_mysql:1.0.0
+    command:
+      - --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    networks:
+      - users_ntwrk
+
+  database:
+    build: database
+    image: users_database:1.0.0
+    environment:
+      SPRING_PROFILES_ACTIVE: local
+    networks:
+      - users_ntwrk
+
+  service:
+    build: service
+    image: users_service:1.0.0
+    networks:
+      - users_ntwrk
+
+  web:
+    build: web
+    image: users_web:1.0.0
+    networks:
+      - users_ntwrk
+
+networks:
+  users_ntwrk:
+    name: users_ntwrk
